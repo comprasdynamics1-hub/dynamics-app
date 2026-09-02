@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Aprovação de Compras · Dynamics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="icone_dynamics_512.png">
+<link rel="apple-touch-icon" href="icone_dynamics_512.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#15181D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Compras Dynamics">
+<meta name="robots" content="noindex, nofollow">
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#15181D;overflow:hidden}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+  .espera{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:16px;background:#15181D;color:#8A95A3;
+    font:400 13px/1.5 system-ui,sans-serif;z-index:2;transition:opacity .4s}
+  .espera img{width:72px;height:72px;border-radius:16px}
+  .espera .giro{width:20px;height:20px;border:2px solid #2C333C;border-top-color:#D0121C;
+    border-radius:50%;animation:g .8s linear infinite}
+  @keyframes g{to{transform:rotate(360deg)}}
+  .some{opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="espera" id="espera">
+    <img src="icone_dynamics_512.png" alt="">
+    <div class="giro"></div>
+    <div>Abrindo a Aprovação de Compras…</div>
+  </div>
+
+  <!-- A URL /exec vai no src abaixo. O app roda aqui dentro, sem a faixa do Google. -->
+  <iframe id="app"
+          src="COLE_AQUI_A_URL_EXEC"
+          allow="clipboard-write; fullscreen"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+<script>
+  var quadro = document.getElementById('app');
+  var espera = document.getElementById('espera');
+
+  quadro.addEventListener('load', function(){
+    espera.classList.add('some');
+    setTimeout(function(){ espera.style.display = 'none'; }, 500);
+  });
+
+  /* Se a URL não foi trocada, avisa em vez de deixar tela preta. */
+  if (quadro.getAttribute('src').indexOf('COLE_AQUI') === 0) {
+    espera.innerHTML = '<div style="max-width:420px;text-align:center;padding:24px;color:#C7D0DA">'
+      + '<b>Falta configurar a URL.</b><br><br>'
+      + 'Edite o index.html no GitHub e substitua COLE_AQUI_A_URL_EXEC '
+      + 'pela URL /exec da implantação.</div>';
+  }
+
+  /* Rede lenta: em 20 segundos ainda sem carregar, oferece o caminho direto. */
+  setTimeout(function(){
+    if (espera.style.display !== 'none' && quadro.getAttribute('src').indexOf('COLE_AQUI') !== 0) {
+      espera.innerHTML = '<div style="max-width:420px;text-align:center;padding:24px;color:#C7D0DA">'
+        + 'Está demorando mais que o normal.<br><br>'
+        + '<a href="' + quadro.getAttribute('src') + '" style="color:#D0121C">Abrir direto</a></div>';
+    }
+  }, 20000);
+</script>
+</body>
+</html>

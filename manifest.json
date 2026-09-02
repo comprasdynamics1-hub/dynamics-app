@@ -1,0 +1,15 @@
+{
+  "name": "Aprovação de Compras · Dynamics",
+  "short_name": "Compras Dynamics",
+  "description": "Aprovação de pedidos de compra do Grupo Dynamics",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#15181D",
+  "theme_color": "#15181D",
+  "icons": [
+    { "src": "icone_dynamics_512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icone_dynamics_512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

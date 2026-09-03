@@ -34,11 +34,24 @@
 
   <!-- A URL /exec vai no src abaixo. O app roda aqui dentro, sem a faixa do Google. -->
   <iframe id="app"
-          src= "https://script.google.com/macros/s/AKfycbz0PbXpOuJWB85f_txI5dE4AThA_BamD7t2mIjO5qJODS_l3tU6e6wo-hZHSxX7Jt_znw/exec"
+          src="COLE_AQUI_A_URL_EXEC"
           allow="clipboard-write; fullscreen"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
 
 <script>
+  /* O aplicativo roda dentro do iframe e avisa quantos pedidos estao na fila.
+     Só a pagina de fora pode marcar o icone do sistema operacional. */
+  window.addEventListener('message', function(ev){
+    var d = ev.data;
+    if(!d || d.tipo !== 'badge') return;
+    try{
+      if(navigator.setAppBadge){
+        if(d.n > 0) navigator.setAppBadge(d.n); else navigator.clearAppBadge();
+      }
+      document.title = (d.n > 0 ? '(' + d.n + ') ' : '') + 'Aprovação de Compras · Dynamics';
+    }catch(e){ /* navegador sem suporte */ }
+  });
+
   var quadro = document.getElementById('app');
   var espera = document.getElementById('espera');
 
